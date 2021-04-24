@@ -1,12 +1,15 @@
+import './index.css';
+import { AppStateProvider } from './AppStateContext';
+import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AppStateProvider>
+      <App />
+    </AppStateProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
