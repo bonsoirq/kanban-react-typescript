@@ -10,16 +10,6 @@ export const AppContainer = styled.div`
   width: 100%;
 `;
 
-export const ColumnContainer = styled.div`
-  background-color: #ebecf0;
-  border-radius: 3px;
-  flex-grow: 0;
-  margin-right: 20px;
-  min-height: 40px;
-  padding: 8px 8px;
-  width: 300px;
-`;
-
 export const ColumnTitle = styled.div`
   font-weight: bold;
   padding: 6px 16px 12px;
@@ -78,4 +68,22 @@ export const NewItemInput = styled.input`
   margin-bottom: 0.5rem;
   padding: 0.5rem 1rem;
   width: 100%;
+`;
+
+type DragPreviewContainerProps = {
+  isHidden?: boolean;
+}
+
+export const DragPreviewContainer = styled.div<DragPreviewContainerProps>`
+  opacity: ${({ isHidden }) => isHidden ? 0.7 : 1 }
+`;
+
+export const ColumnContainer = styled(DragPreviewContainer)`
+  background-color: #ebecf0;
+  border-radius: 3px;
+  flex-grow: 0;
+  margin-right: 20px;
+  min-height: 40px;
+  padding: 8px 8px;
+  width: 300px;
 `;

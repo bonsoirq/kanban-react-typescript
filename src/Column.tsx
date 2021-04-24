@@ -1,10 +1,11 @@
 import React, { useRef } from 'react';
-import { useDrop } from 'react-dnd';
 import { AddNewItem } from './AddNewItem';
-import { useAppState } from './AppStateContext';
 import { Card } from './Card';
-import { DragItem } from './DragItem';
 import { ColumnContainer, ColumnTitle } from './styles';
+import { DragItem } from './DragItem';
+import { isHidden } from './utils/isHidden';
+import { useAppState } from './AppStateContext';
+import { useDrop } from 'react-dnd';
 import { useItemDrag } from './utils/useItemDrag';
 
 type Props = {
@@ -13,7 +14,7 @@ type Props = {
   id: string;
 }
 
-export const Column = ({ 
+export const Column = ({
   text,
   index,
   id,
@@ -21,7 +22,7 @@ export const Column = ({
   const { state, dispatch } = useAppState();
   const ref = useRef<HTMLDivElement>(null);
 
-  const [,drop] = useDrop({
+  const [, drop] = useDrop({
     accept: 'COLUMN',
     hover(item: DragItem) {
       const dragIndex = item.index;
@@ -31,21 +32,21 @@ export const Column = ({
         return;
       }
 
-      dispatch({ type: 'MOVE_LIST', payload: { dragIndex, hoverIndex }})
+      dispatch({ type: 'MOVE_LIST', payload: { dragIndex, hoverIndex } })
       item.index = hoverIndex;
     }
   })
-  
+
   const { drag } = useItemDrag({ type: 'COLUMN', id, text, index });
   drag(drop(ref))
-  
+
   return (
-    <ColumnContainer ref={ref}>
+    <ColumnContainer ref={ref} isHidden={isHidden(state.draggedItem, 'COLUMN', id)}>
       <ColumnTitle>{text}</ColumnTitle>
       {state.lists[index].tasks.map(task => (
         <Card text={task.text} key={task.id} />
       ))}
-      <AddNewItem 
+      <AddNewItem
         toggleButtonText="+ Add another task"
         onAdd={text => {
           dispatch({ type: 'ADD_TASK', payload: { text, taskId: id } })
