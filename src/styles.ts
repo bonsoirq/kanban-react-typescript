@@ -72,10 +72,12 @@ export const NewItemInput = styled.input`
 
 type DragPreviewContainerProps = {
   isHidden?: boolean;
+  isPreview?: boolean;
 }
 
 export const DragPreviewContainer = styled.div<DragPreviewContainerProps>`
-  opacity: ${({ isHidden }) => isHidden ? 0.7 : 1 }
+  transform: ${({ isPreview }) => (isPreview ? 'rotate(5deg)' : undefined) };
+  opacity: ${({ isHidden }) => (isHidden ? 0 : 1) };
 `;
 
 export const ColumnContainer = styled(DragPreviewContainer)`
@@ -86,4 +88,13 @@ export const ColumnContainer = styled(DragPreviewContainer)`
   min-height: 40px;
   padding: 8px 8px;
   width: 300px;
+`;
+
+export const CustomDragLayerContainer = styled.div`
+  height: 100%;
+  left: 0;
+  pointer-events: none;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
 `;
