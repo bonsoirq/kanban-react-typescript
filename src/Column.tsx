@@ -1,7 +1,9 @@
 import React, { useRef } from 'react';
+import { useDrop } from 'react-dnd';
 import { AddNewItem } from './AddNewItem';
 import { useAppState } from './AppStateContext';
 import { Card } from './Card';
+import { DragItem } from './DragItem';
 import { ColumnContainer, ColumnTitle } from './styles';
 import { useItemDrag } from './utils/useItemDrag';
 
@@ -18,9 +20,24 @@ export const Column = ({
 }: React.PropsWithChildren<Props>) => {
   const { state, dispatch } = useAppState();
   const ref = useRef<HTMLDivElement>(null);
+
+  const [,drop] = useDrop({
+    accept: 'COLUMN',
+    hover(item: DragItem) {
+      const dragIndex = item.index;
+      const hoverIndex = index;
+
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+
+      dispatch({ type: 'MOVE_LIST', payload: { dragIndex, hoverIndex }})
+      item.index = hoverIndex;
+    }
+  })
   
   const { drag } = useItemDrag({ type: 'COLUMN', id, text, index });
-  drag(ref)
+  drag(drop(ref))
   
   return (
     <ColumnContainer ref={ref}>

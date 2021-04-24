@@ -19,7 +19,7 @@ const appData: AppState = {
     {
       id: '2',
       text: 'Done',
-      tasks: [{ id: 'c3', text: 'Begin to use static typing'}],
+      tasks: [{ id: 'c3', text: 'Begin to use static typing' }],
     }
   ],
 }
@@ -29,7 +29,7 @@ type Task = {
   text: string;
 }
 
-type List = { 
+type List = {
   id: string;
   text: string;
   tasks: Task[];
@@ -60,7 +60,7 @@ export const useAppState = () => {
   return useContext(AppStateContext);
 }
 
-type Action = 
+type Action =
   | {
     type: "ADD_LIST";
     payload: string;
@@ -101,16 +101,20 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
       state.lists[targetLaneIndex].tasks.push({
         id: uuid(),
         text: action.payload.text,
-      })
-      
+      });
+
       return {
         ...state,
       }
     }
     case 'MOVE_LIST': {
       const { dragIndex, hoverIndex } = action.payload;
-      state.lists = moveItem(state.lists, dragIndex, hoverIndex);
-      return {...state}
+      const lists = moveItem(state.lists, dragIndex, hoverIndex);
+
+      console.log(JSON.stringify({...state}, null, 2));
+      return {
+        ...state, lists
+      }
     }
     case 'SET_DRAGGED_ITEM': {
       return { ...state, draggedItem: action.payload }

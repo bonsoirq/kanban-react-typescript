@@ -6,6 +6,7 @@ import { useAppState } from './AppStateContext';
 
 const App = () => {
   const { state, dispatch } = useAppState();
+  
   return (
     <AppContainer>
       {state.lists.map((list, i) => (
