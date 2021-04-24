@@ -7,13 +7,15 @@ import { ColumnContainer, ColumnTitle } from './styles';
 type Props = {
   text: string;
   index: number;
+  id: string;
 }
 
 export const Column = ({ 
   text,
   index,
+  id,
 }: React.PropsWithChildren<Props>) => {
-  const { state } = useAppState();
+  const { state, dispatch } = useAppState();
 
   return (
     <ColumnContainer>
@@ -23,7 +25,9 @@ export const Column = ({
       ))}
       <AddNewItem 
         toggleButtonText="+ Add another task"
-        onAdd={console.log}
+        onAdd={text => {
+          dispatch({ type: 'ADD_TASK', payload: { text, taskId: id } })
+        }}
         dark
       />
     </ColumnContainer>
