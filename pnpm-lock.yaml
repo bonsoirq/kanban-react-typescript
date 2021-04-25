@@ -10,6 +10,7 @@ specifiers:
   '@types/react-dom': ^17.0.3
   '@types/styled-components': ^5.1.9
   '@types/uuid': ^8.3.0
+  nanoid: ^3.1.22
   react: ^17.0.2
   react-dnd: ^14.0.2
   react-dnd-html5-backend: ^14.0.0
@@ -17,7 +18,7 @@ specifiers:
   react-scripts: 4.0.3
   styled-components: ^5.2.3
   typescript: ^4.2.4
-  uuid: ^8.3.2
+  use-immer: ^0.5.1
   web-vitals: ^1.1.1
 
 dependencies:
@@ -30,6 +31,7 @@ dependencies:
   '@types/react-dom': 17.0.3
   '@types/styled-components': 5.1.9
   '@types/uuid': 8.3.0
+  nanoid: 3.1.22
   react: 17.0.2
   react-dnd: 14.0.2_8ae614532ac4617d2fec0c047feb5cd5
   react-dnd-html5-backend: 14.0.0
@@ -37,7 +39,7 @@ dependencies:
   react-scripts: 4.0.3_react@17.0.2+typescript@4.2.4
   styled-components: 5.2.3_react-dom@17.0.2+react@17.0.2
   typescript: 4.2.4
-  uuid: 8.3.2
+  use-immer: 0.5.1_react@17.0.2
   web-vitals: 1.1.1
 
 packages:
@@ -1345,6 +1347,12 @@ packages:
 
   /@babel/runtime/7.13.10:
     resolution: {integrity: sha512-4QPkjJq6Ns3V/RgpEahRk+AGfL0eO6RHHtTWoNNr5mO49G6B5+X6d6THgWEAvTrznU5xYpbAlVKRYcsCgh/Akw==}
+    dependencies:
+      regenerator-runtime: 0.13.7
+    dev: false
+
+  /@babel/runtime/7.13.17:
+    resolution: {integrity: sha512-NCdgJEelPTSh+FEFylhnP1ylq848l1z9t9N0j1Lfbcw0+KXGjsTvUmkxy+voLLXB5SOKMbLLx4jxYliGrYQseA==}
     dependencies:
       regenerator-runtime: 0.13.7
     dev: false
@@ -4456,7 +4464,7 @@ packages:
     dependencies:
       '@react-dnd/asap': 4.0.0
       '@react-dnd/invariant': 2.0.0
-      redux: 4.0.5
+      redux: 4.1.0
     dev: false
 
   /dns-equal/1.0.0:
@@ -9636,11 +9644,10 @@ packages:
       strip-indent: 3.0.0
     dev: false
 
-  /redux/4.0.5:
-    resolution: {integrity: sha512-VSz1uMAH24DM6MF72vcojpYPtrTUu3ByVWfPL1nPfVRb5mZVTve5GnNCUV53QM/BZ66xfWrm0CTWoM+Xlz8V1w==}
+  /redux/4.1.0:
+    resolution: {integrity: sha512-uI2dQN43zqLWCt6B/BMGRMY6db7TTY4qeHHfGeKb3EOhmOKjU3KdWvNLJyqaHRksv/ErdNH7cFZWg9jXtewy4g==}
     dependencies:
-      loose-envify: 1.4.0
-      symbol-observable: 1.2.0
+      '@babel/runtime': 7.13.17
     dev: false
 
   /regenerate-unicode-properties/8.2.0:
@@ -10783,11 +10790,6 @@ packages:
       util.promisify: 1.0.1
     dev: false
 
-  /symbol-observable/1.2.0:
-    resolution: {integrity: sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ==}
-    engines: {node: '>=0.10.0'}
-    dev: false
-
   /symbol-tree/3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
     dev: false
@@ -11291,6 +11293,15 @@ packages:
       querystring: 0.2.0
     dev: false
 
+  /use-immer/0.5.1_react@17.0.2:
+    resolution: {integrity: sha512-Orb7PokM+jiLQfA1oJ3B3P7Guq0c2IxUHHmBpLeEMnJiz4ZOMlj9mkqq6D7iXJsnurRX0EOB134annf3RjEWHw==}
+    peerDependencies:
+      immer: '>=2.0.0'
+      react: ^16.8.0 || ^17.0.1
+    dependencies:
+      react: 17.0.2
+    dev: false
+
   /use/3.1.1:
     resolution: {integrity: sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==}
     engines: {node: '>=0.10.0'}
@@ -11346,6 +11357,7 @@ packages:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
     dev: false
+    optional: true
 
   /v8-compile-cache/2.3.0:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}

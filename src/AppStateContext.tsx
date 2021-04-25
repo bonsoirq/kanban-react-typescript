@@ -1,56 +1,50 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext } from 'react';
+import { appStateReducer, Task, AppState, List } from './state/appStateReducer';
+import { Action } from './state/actions';
+import { nanoid } from 'nanoid';
+import { useImmerReducer } from 'use-immer';
 import { DragItem } from './DragItem';
-import { findItemIndexById } from './utils/findItemIndexById';
-import { moveItem } from './utils/moveItem';
-import { uuid } from './utils/uuid';
 
 const appData: AppState = {
   lists: [
     {
-      id: '0',
+      id: nanoid(),
       text: 'To Do',
-      tasks: [{ id: 'c0', text: 'Generate app scaffold' }],
+      tasks: [{ id: nanoid(), text: 'Generate app scaffold' }],
     },
     {
-      id: '1',
+      id: nanoid(),
       text: 'In Progress',
-      tasks: [{ id: 'c2', text: 'Learn Typescript' }],
+      tasks: [{ id: nanoid(), text: 'Learn Typescript' }],
     },
     {
-      id: '2',
+      id: nanoid(),
       text: 'Done',
-      tasks: [{ id: 'c3', text: 'Begin to use static typing' }],
+      tasks: [{ id: nanoid(), text: 'Begin to use static typing' }],
     }
   ],
-}
-
-type Task = {
-  id: string;
-  text: string;
-}
-
-type List = {
-  id: string;
-  text: string;
-  tasks: Task[];
-}
-
-type AppState = {
-  lists: List[];
-  draggedItem?: DragItem
+  draggedItem: null,
 }
 
 type Props = {
-  state: AppState;
+  lists: List[];
+  draggedItem: DragItem | null;
+  getTasksByListId(id: string): Task[];
   dispatch: React.Dispatch<Action>;
 }
 const AppStateContext = createContext<Props>({} as Props);
 
 export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
-  const [state, dispatch] = useReducer(appStateReducer, appData);
+  const [state, dispatch] = useImmerReducer(appStateReducer, appData);
+
+  const { lists } = state;
+  const draggedItem = null;
+  const getTasksByListId = (id: string): Task[] => {
+    return lists.find(list => list.id === id)?.tasks ?? [];
+  }
 
   return (
-    <AppStateContext.Provider value={{ state, dispatch }}>
+    <AppStateContext.Provider value={{ lists, getTasksByListId, dispatch, draggedItem }}>
       {children}
     </AppStateContext.Provider>
   )
@@ -58,69 +52,4 @@ export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
 
 export const useAppState = () => {
   return useContext(AppStateContext);
-}
-
-type Action =
-  | {
-    type: "ADD_LIST";
-    payload: string;
-  }
-  | {
-    type: 'ADD_TASK';
-    payload: { text: string; taskId: string; };
-  }
-  | {
-    type: 'MOVE_LIST';
-    payload: {
-      dragIndex: number;
-      hoverIndex: number;
-    }
-  }
-  | {
-    type: 'SET_DRAGGED_ITEM';
-    payload: DragItem | undefined;
-  }
-
-const appStateReducer = (state: AppState, action: Action): AppState => {
-  switch (action.type) {
-    case 'ADD_LIST': {
-      return {
-        ...state,
-        lists: [
-          ...state.lists,
-          { id: uuid(), text: action.payload, tasks: [] },
-        ]
-      }
-    }
-    case 'ADD_TASK': {
-      const targetLaneIndex = findItemIndexById(
-        state.lists,
-        action.payload.taskId,
-      );
-
-      state.lists[targetLaneIndex].tasks.push({
-        id: uuid(),
-        text: action.payload.text,
-      });
-
-      return {
-        ...state,
-      }
-    }
-    case 'MOVE_LIST': {
-      const { dragIndex, hoverIndex } = action.payload;
-      const lists = moveItem(state.lists, dragIndex, hoverIndex);
-
-      console.log(JSON.stringify({...state}, null, 2));
-      return {
-        ...state, lists
-      }
-    }
-    case 'SET_DRAGGED_ITEM': {
-      return { ...state, draggedItem: action.payload }
-    }
-    default: {
-      return state;
-    }
-  }
 }

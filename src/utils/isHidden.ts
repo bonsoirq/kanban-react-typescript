@@ -2,7 +2,7 @@ import { DragItem } from './../DragItem';
 
 export const isHidden = (
   isPreview: boolean | undefined,
-  draggedItem: DragItem | undefined,
+  draggedItem: DragItem | null,
   itemType: string,
   id: string,
 ) => {

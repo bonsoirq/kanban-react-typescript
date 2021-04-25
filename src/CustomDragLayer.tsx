@@ -39,7 +39,6 @@ export const CustomDragLayer = () => {
         <Column
           id={item.id}
           text={item.text}
-          index={item.index}
           isPreview
         />
       </div>

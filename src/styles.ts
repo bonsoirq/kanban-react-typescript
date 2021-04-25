@@ -15,15 +15,6 @@ export const ColumnTitle = styled.div`
   padding: 6px 16px 12px;
 `;
 
-export const CardContainer = styled.div`
-  background-color: #fff;
-  border-radius: 3px;
-  box-shadow: #091e4240 0px 1px 0px 0px;
-  cursor: pointer;
-  margin-bottom: 0.5rem;
-  padding: 0.5rem 1rem;
-`;
-
 type AddItemButtonProps = {
   dark?: boolean;
 }
@@ -77,7 +68,7 @@ type DragPreviewContainerProps = {
 
 export const DragPreviewContainer = styled.div<DragPreviewContainerProps>`
   transform: ${({ isPreview }) => (isPreview ? 'rotate(5deg)' : undefined) };
-  opacity: ${({ isHidden }) => (isHidden ? 0 : 1) };
+  opacity: ${({ isHidden }) => (isHidden ? 0.3 : 1) };
 `;
 
 export const ColumnContainer = styled(DragPreviewContainer)`
@@ -97,4 +88,13 @@ export const CustomDragLayerContainer = styled.div`
   position: fixed;
   width: 100%;
   z-index: 100;
+`;
+
+export const CardContainer = styled(DragPreviewContainer)`
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: #091e4240 0px 1px 0px 0px;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
 `;

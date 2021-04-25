@@ -8,13 +8,13 @@ import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <DndProvider backend={HTML5Backend}>
+  <DndProvider backend={HTML5Backend}>
+    <React.StrictMode>
       <AppStateProvider>
         <App />
       </AppStateProvider>
-    </DndProvider>
-  </React.StrictMode>,
+    </React.StrictMode>
+  </DndProvider>,
   document.getElementById('root')
 );
 

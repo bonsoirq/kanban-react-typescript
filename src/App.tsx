@@ -3,21 +3,22 @@ import { AddNewItem } from './AddNewItem';
 import { AppContainer } from './styles';
 import { Column } from './Column';
 import { useAppState } from './AppStateContext';
-import { CustomDragLayer } from './CustomDragLayer';
+import { addList } from './state/actions';
+import { Debug } from './utils/Debug';
 
 const App = () => {
-  const { state, dispatch } = useAppState();
-  
+  const { lists, draggedItem, dispatch } = useAppState();
+
   return (
     <AppContainer>
-      <CustomDragLayer />
-      {state.lists.map((list, i) => (
-        <Column id={list.id} text={list.text} key={list.id} index={i} />
+      {lists.map((list) => (
+        <Column id={list.id} text={list.text} key={list.id} />
       ))}
-      <AddNewItem 
+      <AddNewItem
         toggleButtonText="+ Add another list"
-        onAdd={text => dispatch({ type: 'ADD_LIST', payload: text })}
+        onAdd={text => dispatch(addList(text))}
       />
+      <Debug object={draggedItem}/>
     </AppContainer>
   );
 }
