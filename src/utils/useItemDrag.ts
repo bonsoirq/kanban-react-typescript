@@ -6,12 +6,12 @@ import { useDrag } from 'react-dnd';
 export const useItemDrag = (item: DragItem) => {
   const { dispatch } = useAppState();
   const [, drag] = useDrag({
-    item: () => {
+    item() {
       dispatch(setDraggedItem(item));
       return item;
     },
     type: item.type,
-    end: () => {
+    end() {
       dispatch(setDraggedItem(null));
     }
   });

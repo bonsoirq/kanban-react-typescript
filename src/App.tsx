@@ -4,10 +4,9 @@ import { AppContainer } from './styles';
 import { Column } from './Column';
 import { useAppState } from './AppStateContext';
 import { addList } from './state/actions';
-import { Debug } from './utils/Debug';
 
 const App = () => {
-  const { lists, draggedItem, dispatch } = useAppState();
+  const { lists, dispatch } = useAppState();
 
   return (
     <AppContainer>
@@ -18,7 +17,6 @@ const App = () => {
         toggleButtonText="+ Add another list"
         onAdd={text => dispatch(addList(text))}
       />
-      <Debug object={draggedItem}/>
     </AppContainer>
   );
 }

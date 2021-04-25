@@ -25,7 +25,7 @@ export const Column = ({
   const { drag } = useItemDrag({ type: 'COLUMN', id, text });
   const [, drop] = useDrop({
     accept: 'COLUMN',
-    hover: () => {
+    hover() {
       if (!draggedItem) {
         return;
       }

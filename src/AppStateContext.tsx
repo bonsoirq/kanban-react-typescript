@@ -32,13 +32,12 @@ type Props = {
   getTasksByListId(id: string): Task[];
   dispatch: React.Dispatch<Action>;
 }
-const AppStateContext = createContext<Props>({} as Props);
+const AppStateContext = createContext<Props>(appData as Props);
 
 export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
   const [state, dispatch] = useImmerReducer(appStateReducer, appData);
 
-  const { lists } = state;
-  const draggedItem = null;
+  const { lists, draggedItem } = state;
   const getTasksByListId = (id: string): Task[] => {
     return lists.find(list => list.id === id)?.tasks ?? [];
   }
