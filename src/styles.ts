@@ -17,13 +17,13 @@ export const ColumnTitle = styled.div`
 
 type AddItemButtonProps = {
   dark?: boolean;
-}
+};
 
 export const AddItemButton = styled.button<AddItemButtonProps>`
   background-color: #ffffff3d;
   border-radius: 3px;
   border: none;
-  color: ${props => (props.dark ? '#000' : '#fff')};
+  color: ${(props) => (props.dark ? "#000" : "#fff")};
   cursor: pointer;
   max-width: 300px;
   padding: 10px 12px;
@@ -64,11 +64,11 @@ export const NewItemInput = styled.input`
 type DragPreviewContainerProps = {
   isHidden?: boolean;
   isPreview?: boolean;
-}
+};
 
 export const DragPreviewContainer = styled.div<DragPreviewContainerProps>`
-  transform: ${({ isPreview }) => (isPreview ? 'rotate(5deg)' : undefined) };
-  opacity: ${({ isHidden }) => (isHidden ? 0.3 : 1) };
+  transform: ${({ isPreview }) => (isPreview ? "rotate(5deg)" : undefined)};
+  opacity: ${({ isHidden }) => (isHidden ? 0 : 1)};
 `;
 
 export const ColumnContainer = styled(DragPreviewContainer)`
@@ -98,3 +98,18 @@ export const CardContainer = styled(DragPreviewContainer)`
   margin-bottom: 0.5rem;
   padding: 0.5rem 1rem;
 `;
+
+type DragPreviewWrapperProps = {
+  position: {
+    x: number;
+    y: number;
+  };
+};
+
+export const DragPreviewWrapper = styled.div.attrs<DragPreviewWrapperProps>(
+  ({ position: { x, y } }) => ({
+    style: {
+      transform: `translate(${x}px, ${y}px)`,
+    },
+  })
+)<DragPreviewWrapperProps>``;

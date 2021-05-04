@@ -1,47 +1,28 @@
 import React from 'react';
-import { XYCoord, useDragLayer } from 'react-dnd';
-import { CustomDragLayerContainer } from './styles';
+import { useDragLayer } from 'react-dnd';
+import { CustomDragLayerContainer, DragPreviewWrapper } from './styles';
 import { Column } from './Column';
-
-const getItemStyles = (
-  currentOffset: XYCoord | null
-): React.CSSProperties => {
-  if (!currentOffset) {
-    return {
-      display: 'none',
-    }
-  }
-
-  const {x, y} = currentOffset;
-
-  const transform = `translate(${x}px, ${y}px)`;
-
-  return {
-    transform,
-    WebkitTransform: transform,
-  }
-};
+import { useAppState } from './AppStateContext';
 
 export const CustomDragLayer = () => {
-  const { isDragging, item, currentOffset } = useDragLayer(monitor => ({
-    currentOffset: monitor.getSourceClientOffset(),
-    item: monitor.getItem(),
-    isDragging: monitor.isDragging()
+  const { draggedItem } = useAppState();
+  const { currentOffset } = useDragLayer(monitor => ({
+    currentOffset: monitor.getSourceClientOffset() ?? { x: 0, y: 0 },
   }));
 
-  if (!isDragging) {
+  if (!draggedItem) {
     return null;
   }
 
   return (
     <CustomDragLayerContainer>
-      <div style={getItemStyles(currentOffset)}>
+      <DragPreviewWrapper position={currentOffset}>
         <Column
-          id={item.id}
-          text={item.text}
+          id={draggedItem.id}
+          text={draggedItem.text}
           isPreview
         />
-      </div>
+      </DragPreviewWrapper>
     </CustomDragLayerContainer>
   )
 }
